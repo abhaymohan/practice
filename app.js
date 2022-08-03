@@ -1,26 +1,19 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+
+const adminRoutes = require("./routes/admin.js");
+const shopRoutes = require("./routes/shop");
 
 const app = express(); // this is a function no class instatiation
 
-// start middleware 
-app.get('/',(req, res, go) => {
-  console.log("in the middleware 1");
-  go(); // this allows the request to continue to next middleware
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(adminRoutes);
+app.use(shopRoutes);
+
+
+
+app.listen(5000, () => {
+  console.log("server is listening to port 5000.");
 });
-
-
-// second middleware
-app.use((req, res, come) => {
-  console.log("in the middleware 2");
-  come();
-})
-
-app.use((req,res) => {
-  console.log("request has reached to third middleware.")
-  // and it expires here
-})
-
-// and so on middleware
-
-app.listen(5000);
-
